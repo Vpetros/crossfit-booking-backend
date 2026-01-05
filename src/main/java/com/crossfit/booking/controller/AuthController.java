@@ -1,5 +1,6 @@
 package com.crossfit.booking.controller;
 
+import com.crossfit.booking.dto.common.MessageResponse;
 import com.crossfit.booking.auth.JwtService;
 import com.crossfit.booking.dto.auth.AuthResponse;
 import com.crossfit.booking.dto.auth.LoginRequest;
@@ -47,11 +48,11 @@ public class AuthController {
 
         // Checks duplicates
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            return ResponseEntity.badRequest().body("Username already exists");
+            return ResponseEntity.badRequest().body(new MessageResponse("Username already exists"));
         }
 
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            return ResponseEntity.badRequest().body("Email already exists");
+            return ResponseEntity.badRequest().body(new MessageResponse("Email already exists"));
         }
 
         Set<Role> roles = new HashSet<>();
@@ -80,7 +81,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("User created");
+        return ResponseEntity.ok(new MessageResponse("User created"));
     }
 
     @PostMapping("/login")
@@ -107,7 +108,7 @@ public class AuthController {
                 role
         );
 
-        AuthResponse response = new AuthResponse(token, "Bearer", user.getUsername(), role);
+        AuthResponse response = new AuthResponse(token, user.getUsername(), role, "Bearer");
 
         return ResponseEntity.ok(response);
     }
