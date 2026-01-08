@@ -47,7 +47,7 @@ public class WodAdminScheduleService {
 
                 boolean exists = wodScheduleRepository.existsByDateAndStartTime(date, slot.start());
                 if (exists) {
-                    continue; // keep existing as it is
+                    continue; // keep as it is
                 }
 
                 WodSchedule schedule = WodSchedule.builder()
@@ -55,7 +55,7 @@ public class WodAdminScheduleService {
                         .startTime(slot.start())
                         .endTime(slot.end())
                         .workoutDescription("") // closed until admin updates
-                        .capacity(20)
+                        .capacity(1)
                         .bookedCount(0)
                         .build();
 

@@ -38,6 +38,12 @@ public class AdminWodController {
         return ResponseEntity.ok(updated);
     }
 
+    @PostMapping("/generate-current-week")
+    public ResponseEntity<List<WodSchedule>> generateCurrentWeek() {
+        List<WodSchedule> schedules = weeklyScheduleGenerator.generateCurrentWeek();
+        return ResponseEntity.ok(schedules);
+    }
+
     @PostMapping("/generate-next-week")
     public ResponseEntity<List<WodSchedule>> generateNextWeek() {
         return ResponseEntity.ok(weeklyScheduleGenerator.generateNextWeek());

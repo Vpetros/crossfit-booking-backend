@@ -46,6 +46,14 @@ public class WeeklyScheduleGenerator {
     }
 
     /**
+     * Used for initial seed
+     */
+    public List<WodSchedule> generateCurrentWeek() {
+        LocalDate thisMonday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        return generateWeekFrom(thisMonday);
+    }
+
+    /**
      * Creates only missing slots, and returns schedules for the given week.
      */
     private List<WodSchedule> generateWeekFrom(LocalDate weekStartMonday) {
@@ -92,14 +100,14 @@ public class WeeklyScheduleGenerator {
                             .startTime(start)
                             .endTime(end)
                             .workoutDescription("") // empty until admin updates
-                            .capacity(20)
+                            .capacity(1)
                             .bookedCount(0)
                             .build();
 
                     schedule = wodScheduleRepository.save(schedule);
                     result.add(schedule);
                 } else {
-                    // Optional: include existing schedule in the returned list for Swagger verification
+                    // Include existing schedule in the returned list for Swagger ver
                     wodScheduleRepository.findByDateAndStartTime(date, start)
                             .ifPresent(result::add);
                 }
