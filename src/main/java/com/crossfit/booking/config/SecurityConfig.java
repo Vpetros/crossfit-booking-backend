@@ -68,8 +68,8 @@ public class SecurityConfig {
                 .httpBasic(basic -> basic.disable())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(
-                    jwtAuthenticationFilter,
-                    UsernamePasswordAuthenticationFilter.class
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
                 );
 
         return http.build();
@@ -109,6 +109,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 
 
 }

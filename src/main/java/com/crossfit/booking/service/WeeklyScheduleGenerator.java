@@ -33,11 +33,6 @@ public class WeeklyScheduleGenerator {
         log.info("Generated/verified next-week schedules. Total returned: {}", result.size());
     }
 
-    /**
-     * Manual trigger (used by Admin Wod Controller):
-     * Generates (if missing) all slots for the next week(Monday).
-     * Returns the list of schedules for that next week (created + existing).
-     */
     public List<WodSchedule> generateNextWeek() {
         LocalDate nextMonday = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY));
@@ -54,7 +49,7 @@ public class WeeklyScheduleGenerator {
     }
 
     /**
-     * Creates only missing slots, and returns schedules for the given week.
+     * Creates only missing slots and returns schedules for the given week.
      */
     private List<WodSchedule> generateWeekFrom(LocalDate weekStartMonday) {
         List<WodSchedule> result = new ArrayList<>();
@@ -99,15 +94,15 @@ public class WeeklyScheduleGenerator {
                             .date(date)
                             .startTime(start)
                             .endTime(end)
-                            .workoutDescription("") // empty until admin updates
-                            .capacity(1)
+                            .workoutDescription("")
+                            .capacity(20)
                             .bookedCount(0)
                             .build();
 
                     schedule = wodScheduleRepository.save(schedule);
                     result.add(schedule);
                 } else {
-                    // Include existing schedule in the returned list for Swagger ver
+
                     wodScheduleRepository.findByDateAndStartTime(date, start)
                             .ifPresent(result::add);
                 }

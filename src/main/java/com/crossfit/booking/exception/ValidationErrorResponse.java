@@ -9,10 +9,10 @@ import java.util.Map;
 @Getter
 public class ValidationErrorResponse {
 
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    private Map<String, String> errors;
+    private final LocalDateTime timestamp;
+    private final int status;
+    private final String error;
+    private final Map<String, String> errors;
 
     public ValidationErrorResponse(int status, String error, Map<String, String> errors) {
         this.timestamp = LocalDateTime.now();
