@@ -10,4 +10,7 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 
     boolean existsByUserIdAndWodScheduleId(String userId, String wodScheduleId);
     List<Booking> findAllByUserId(String userId);
+
+    // Admin: list all bookings
+    List<Booking> findAllByOrderByTimestampDesc();
 }
