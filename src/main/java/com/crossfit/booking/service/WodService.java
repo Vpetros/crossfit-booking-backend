@@ -25,7 +25,8 @@ public class WodService {
     }
 
     public List<WodSlotResponse> getCurrentWeekForUser() {
-        LocalDate monday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate monday = LocalDate.now()
+                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate sunday = monday.plusDays(6);
 
         return wodScheduleRepository
