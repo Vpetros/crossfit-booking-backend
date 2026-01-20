@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
@@ -25,12 +26,14 @@ public class WodService {
     }
 
     public List<WodSlotResponse> getCurrentWeekForUser() {
-        LocalDate monday = LocalDate.now()
-                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate sunday = monday.plusDays(6);
 
-        return wodScheduleRepository
-                .findByDateBetweenOrderByDateAscStartTimeAsc(monday, sunday)
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Athens"));
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        LocalDate start = monday;
+        LocalDate endExclusive = monday.plusWeeks(1);
+
+        return wodScheduleRepository.findWeek(start, endExclusive)
                 .stream()
                 .map(wodScheduleMapper::toWeekResponse)
                 .toList();
