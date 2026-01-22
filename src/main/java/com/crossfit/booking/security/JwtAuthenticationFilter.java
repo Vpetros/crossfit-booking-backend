@@ -82,17 +82,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
 
+            filterChain.doFilter(request, response);
+
         } catch (ExpiredJwtException e) {
             log.warn("JWT expired");
-            throw new AuthenticationCredentialsNotFoundException("JWT expired", e);
-        } catch (JwtException | IllegalArgumentException e) {
+            sendUnauthorized(response, "Unauthorized");
+        } catch (JwtException | IllegalArgumentException | BadCredentialsException e) {
             log.warn("Invalid JWT");
-            throw new BadCredentialsException("Invalid JWT");
+            sendUnauthorized(response, "Unauthorized");
         } catch (Exception e) {
             log.error("JWT authentication failed", e);
-            throw new AccessDeniedException("JWT authentication failed", e);
+            sendUnauthorized(response, "Unauthorized");
         }
+    }
 
-        filterChain.doFilter(request, response);
+    private void sendUnauthorized(HttpServletResponse response, String message) throws IOException {
+        if (response.isCommitted()) return;
+        response.resetBuffer();
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"message\":\"" + message + "\"}");
+        response.flushBuffer();
     }
 }
