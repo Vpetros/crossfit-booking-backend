@@ -9,14 +9,18 @@ import org.springframework.stereotype.Component;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
 @Slf4j
 @Component
 public class WeeklyScheduleGenerator {
+
+    private static final ZoneId ATHENS = ZoneId.of("Europe/Athens");
 
     private final WodScheduleRepository wodScheduleRepository;
 
@@ -34,25 +38,31 @@ public class WeeklyScheduleGenerator {
     }
 
     public List<WodSchedule> generateNextWeek() {
-        LocalDate nextMonday = LocalDate.now()
+        LocalDate nextMonday = LocalDate.now(ATHENS)
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY));
 
-        return generateWeekFrom(nextMonday);
+        return generateWeekWindow(nextMonday);
     }
 
     /**
      * Used for initial seed
      */
     public List<WodSchedule> generateCurrentWeek() {
-        LocalDate thisMonday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        return generateWeekFrom(thisMonday);
+        LocalDate thisMonday = LocalDate.now(ATHENS)
+                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        return generateWeekWindow(thisMonday);
     }
 
     /**
      * Creates only missing slots and returns schedules for the given week.
      */
-    private List<WodSchedule> generateWeekFrom(LocalDate weekStartMonday) {
-        List<WodSchedule> result = new ArrayList<>();
+    private List<WodSchedule> generateWeekWindow(LocalDate weekStartMonday) {
+
+        LocalDate startInclusive = weekStartMonday;
+        LocalDate endExclusive = weekStartMonday.plusWeeks(1);
+
+        List<WodSchedule> existing = wodScheduleRepository.findWeek(startInclusive, endExclusive);
 
         List<LocalTime> weekdaysStarts = List.of(
                 LocalTime.of(8, 0),
@@ -72,44 +82,46 @@ public class WeeklyScheduleGenerator {
                 LocalTime.of(12, 0)
         );
 
-        for (int i = 0; i < 7; i++) {
-            LocalDate date = weekStartMonday.plusDays(i);
+        List<WodSchedule> created = new ArrayList<>();
 
-            if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        for (LocalDate date = startInclusive; date.isBefore(endExclusive); date = date.plusDays(1)) {
+
+            DayOfWeek dow = date.getDayOfWeek();
+            if (dow == DayOfWeek.SUNDAY) {
                 continue; // closed
             }
 
-            List<LocalTime> starts = (date.getDayOfWeek() == DayOfWeek.SATURDAY)
-                    ? saturdayStarts
-                    : weekdaysStarts;
+            List<LocalTime> starts = (dow == DayOfWeek.SATURDAY) ? saturdayStarts : weekdaysStarts;
 
             for (LocalTime start : starts) {
                 LocalTime end = start.plusHours(1);
 
-                // Create only if missing
                 boolean exists = wodScheduleRepository.existsByDateAndStartTime(date, start);
-
-                if (!exists) {
-                    WodSchedule schedule = WodSchedule.builder()
-                            .date(date)
-                            .startTime(start)
-                            .endTime(end)
-                            .workoutDescription("")
-                            .capacity(20)
-                            .bookedCount(0)
-                            .build();
-
-                    schedule = wodScheduleRepository.save(schedule);
-                    result.add(schedule);
-                } else {
-
-                    wodScheduleRepository.findByDateAndStartTime(date, start)
-                            .ifPresent(result::add);
+                if (exists) {
+                    continue;
                 }
+
+                WodSchedule schedule = WodSchedule.builder()
+                        .date(date)
+                        .startTime(start)
+                        .endTime(end)
+                        .workoutDescription("")
+                        .capacity(20)
+                        .bookedCount(0)
+                        .build();
+
+                created.add(wodScheduleRepository.save(schedule));
             }
         }
 
-        return result;
+        if (!created.isEmpty()) {
+            existing.addAll(created);
+        }
+
+        existing.sort(Comparator.comparing(WodSchedule::getDate)
+                .thenComparing(WodSchedule::getStartTime));
+
+        return existing;
     }
 }
 

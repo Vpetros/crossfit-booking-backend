@@ -13,10 +13,10 @@ import java.util.Optional;
 
 public interface WodScheduleRepository extends MongoRepository<WodSchedule, String> {
 
-    List<WodSchedule> findByDateBetweenOrderByDateAscStartTimeAsc(
-            LocalDate start,
-            LocalDate end
-    );
+//    List<WodSchedule> findByDateBetweenOrderByDateAscStartTimeAsc(
+//            LocalDate start,
+//            LocalDate end
+//    );
 
     @Query(value = "{ 'date': { $gte: ?0, $lt: ?1 } }", sort = "{ 'date': 1, 'startTime': 1 }")
     List<WodSchedule> findWeek(
