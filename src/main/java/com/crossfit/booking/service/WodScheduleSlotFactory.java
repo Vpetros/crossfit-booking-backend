@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalTime;
 import java.util.List;
 
-@Component
+//@Component
 public class WodScheduleSlotFactory {
 
     public record Slot(LocalTime start, LocalTime end) {}
