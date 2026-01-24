@@ -92,7 +92,7 @@ OpenAPI JSON: /api-docs
 
 Timezone: Europe/Athens (configured via spring.task.scheduling.time-zone)
 
-Automatic: every Sunday at 23:00 creates the next week schedules (Mon–Sat; Sunday closed).
+Automatic: every Saturday at 15:00 creates the next week schedule (Mon–Sat; Sunday closed).
 
 Admin can also manually trigger generation.
 
