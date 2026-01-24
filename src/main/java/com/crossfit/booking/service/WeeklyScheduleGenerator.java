@@ -29,9 +29,9 @@ public class WeeklyScheduleGenerator {
     }
 
     /**
-     * Automatic job: every Sunday at 23:00 (Europe/Athens via global config)
+     * Automatic job: every Saturday at 15:00 (Europe/Athens via global config)
      */
-    @Scheduled(cron = "0 0 23 * * SUN")
+    @Scheduled(cron = "0 0 15 * * SAT")
     public void generateNextWeekSchedule() {
         List<WodSchedule> result = generateNextWeek();
         log.info("Generated/verified next-week schedules. Total returned: {}", result.size());
