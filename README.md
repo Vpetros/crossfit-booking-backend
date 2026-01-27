@@ -50,7 +50,7 @@ JWT_EXPIRATION_MS=86400000
 
 ## Notes
 
-JWT_SECRET must be strong (at least 256-bit/32 bytes).
+JWT_SECRET must be at least 256 bits(32 bytes).
 
 If your MongoDB password contains special characters, you may need URL encoding.
 
@@ -65,13 +65,27 @@ If your MongoDB password contains special characters, you may need URL encoding.
 ## Run (Local)
 ### IntelliJ
 
-Install the IntelliJ plugin EnvFile
+-Clone the repository
 
-Run → Edit Configurations → (your Spring Boot run config)
+-Create a .env file in the project root
 
-Enable EnvFile → select your .env file
+-Install IntelliJ plugin: EnvFile
 
-Run the application
+-Run → Edit Configurations → Spring Boot
+
+-Enable EnvFile → select your .env file
+
+-Run the application
+
+Application runs on:
+
+http://localhost:8080
+
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
 
 ## Build
 ### Build JAR
@@ -98,20 +112,25 @@ Admin can also manually trigger generation.
 
 
 ## Deploy
-As a Java application and inject environment variables on the server/cloud provider.
+The application can be deployed as a standard Java application and inject environment variables on the server/cloud provider.
+
+Required environment variables:
 
 MONGO_URI
 
+MONGO_DB
+
 JWT_SECRET
+
+JWT_EXPIRATION_MS
 
 SERVER_PORT
 
 APP_TIMEZONE
 
-JWT_EXPIRATION_MS
 
 ## Roles
 
 ROLE_USER: view schedule, book/cancel reservations, profile.
 
-ROLE_ADMIN: CRUD WOD schedule data, view reservations, manage users.
+ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
