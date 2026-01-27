@@ -39,7 +39,7 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 - Role-based access control is enforced via Spring Security.
 - Admin users can be created:
   - Manually in MongoDB (direct database access), or
-  - Via the Swagger `POST /api/auth/register` endpoint **for development/testing purposes**,
+  - Via the Swagger `POST /api/auth/register` endpoint **"for development/testing purposes"**,
     by registering a user with role `ROLE_ADMIN`.
 
 ---
