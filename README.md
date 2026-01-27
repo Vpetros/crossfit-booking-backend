@@ -11,6 +11,8 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 - MongoDB (MongoDB Atlas supported)
 - Swagger / OpenAPI
 - Maven 3.8+ (or use the Maven Wrapper)
+- Intellij IDEA (recommended)
+- ❗ No local MongoDB installation is required.
 
 ---
 
@@ -77,7 +79,7 @@ If your MongoDB password contains special characters, you may need URL encoding.
 .env.*
 
 ## Run (Local)
-### IntelliJ
+### IntelliJ IDEA
 
 - Clone the repository
 
