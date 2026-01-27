@@ -30,9 +30,9 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 
 ### Roles
 
--ROLE_USER: view schedule, book/cancel reservations, profile.
+- ROLE_USER: view schedule, book/cancel reservations, profile.
 
--ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
+- ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
 
 ### Notes
 - JWT is required for protected endpoints.
@@ -79,17 +79,17 @@ If your MongoDB password contains special characters, you may need URL encoding.
 ## Run (Local)
 ### IntelliJ
 
--Clone the repository
+- Clone the repository
 
--Create a .env file in the project root
+- Create a .env file in the project root
 
--Install IntelliJ plugin: EnvFile
+- Install IntelliJ plugin: EnvFile
 
--Run → Edit Configurations → Spring Boot
+- Run → Edit Configurations → Spring Boot
 
--Enable EnvFile → select your .env file
+- Enable EnvFile → select your .env file
 
--Run the application
+- Run the application
 
 Application runs on:
 
