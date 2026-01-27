@@ -28,6 +28,12 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 - View and manage bookings
 - Role-based authorization
 
+### Roles
+
+ROLE_USER: view schedule, book/cancel reservations, profile.
+
+ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
+
 ---
 
 ## Configuration (Environment Variables)
@@ -86,9 +92,21 @@ Swagger UI:
 
 http://localhost:8080/swagger-ui/index.html
 
+## Run (CLI – Optional)
+
+Alternatively, the application can be started via terminal:
+
+export SPRING_PROFILES_ACTIVE=dev
+export MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER_HOST>/<DB>?retryWrites=true&w=majority"
+export MONGO_DB=crossfitdb
+export JWT_SECRET="<SECRET>"
+
+mvn spring-boot:run
+
 
 ## Build
 ### Build JAR
+
 ./mvnw clean package
 
 
@@ -128,9 +146,3 @@ SERVER_PORT
 
 APP_TIMEZONE
 
-
-## Roles
-
-ROLE_USER: view schedule, book/cancel reservations, profile.
-
-ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
