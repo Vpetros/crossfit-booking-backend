@@ -96,10 +96,10 @@ http://localhost:8080/swagger-ui/index.html
 
 Alternatively, the application can be started via terminal:
 
-export SPRING_PROFILES_ACTIVE=dev
-export MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER_HOST>/<DB>?retryWrites=true&w=majority"
-export MONGO_DB=crossfitdb
-export JWT_SECRET="<SECRET>"
+- export SPRING_PROFILES_ACTIVE=dev
+- export MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER_HOST>/<DB>?retryWrites=true&w=majority"
+- export MONGO_DB=crossfitdb
+- export JWT_SECRET="<SECRET>"
 
 mvn spring-boot:run
 
