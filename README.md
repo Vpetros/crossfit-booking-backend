@@ -142,15 +142,15 @@ The application can be deployed as a standard Java application and inject enviro
 
 Required environment variables:
 
-MONGO_URI
+- MONGO_URI
 
-MONGO_DB
+- MONGO_DB
 
-JWT_SECRET
+- JWT_SECRET
 
-JWT_EXPIRATION_MS
+- JWT_EXPIRATION_MS
 
-SERVER_PORT
+- SERVER_PORT
 
-APP_TIMEZONE
+- APP_TIMEZONE
 
