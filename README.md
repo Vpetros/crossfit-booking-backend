@@ -78,7 +78,7 @@ If your MongoDB password contains special characters, you may need URL encoding.
 
 .env.*
 
-## Run (Local)
+## How to Run the Project
 ### IntelliJ IDEA
 
 - Clone the repository
@@ -102,7 +102,7 @@ Swagger UI:
 
 http://localhost:8080/swagger-ui/index.html
 
-## Run (CLI – Optional)
+## Optional Run (Terminal/Git Bash)
 
 ```Alternatively, the application can be started via terminal:
 
