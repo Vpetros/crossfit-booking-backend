@@ -159,7 +159,7 @@ Required environment variables:
 - APP_TIMEZONE
 
 
-### Testing
+## Testing
 
 The application has been functionally tested end-to-end (manual testing) during development.
 
