@@ -6,11 +6,13 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 
 ## General Requirements
 - Java 17
-- Spring Boot 3.x
+- Spring Boot 3.4.12
 - Spring Security (JWT Authentication & Authorization)
 - MongoDB (MongoDB Atlas supported)
 - Swagger / OpenAPI
 - Maven 3.8+ (or use the Maven Wrapper)
+- Intellij IDEA (recommended)
+- ❗ No local MongoDB installation is required.
 
 ---
 
@@ -27,6 +29,20 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 - Update WOD descriptions per date & time slot
 - View and manage bookings
 - Role-based authorization
+
+### Roles
+
+- ROLE_USER: view schedule, book/cancel reservations, profile.
+
+- ROLE_ADMIN: CRUD WOD schedule data, generate weekly schedules, view reservations, manage users.
+
+### Notes
+- JWT is required for protected endpoints.
+- Role-based access control is enforced via Spring Security.
+- Admin users can be created:
+  - Manually in MongoDB (direct database access), or
+  - Via the Swagger `POST /api/auth/register` endpoint **"for development/testing purposes"**,
+    by registering a user with role `ROLE_ADMIN`.
 
 ---
 
@@ -50,7 +66,7 @@ JWT_EXPIRATION_MS=86400000
 
 ## Notes
 
-JWT_SECRET must be strong (at least 256-bit/32 bytes).
+JWT_SECRET must be at least 256 bits(32 bytes).
 
 If your MongoDB password contains special characters, you may need URL encoding.
 
@@ -62,19 +78,47 @@ If your MongoDB password contains special characters, you may need URL encoding.
 
 .env.*
 
-## Run (Local)
-### IntelliJ
+## How to Run the Project
+### IntelliJ IDEA
 
-Install the IntelliJ plugin EnvFile
+- Clone the repository
 
-Run → Edit Configurations → (your Spring Boot run config)
+- Create a .env file in the project root
 
-Enable EnvFile → select your .env file
+- Install IntelliJ plugin: EnvFile
 
-Run the application
+- Run → Edit Configurations → Spring Boot
+
+- Enable EnvFile → select your .env file
+
+- Run the application
+
+Application runs on:
+
+http://localhost:8080
+
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
+## Optional Run (Terminal/Git Bash)
+
+```Alternatively, the application can be started via terminal:
+
+export SPRING_PROFILES_ACTIVE=dev
+export MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER_HOST>/<DB>?retryWrites=true&w=majority"
+export MONGO_DB=crossfitdb
+export JWT_SECRET="<SECRET>"
+
+mvn spring-boot:run
+
+```
+
 
 ## Build
 ### Build JAR
+
 ./mvnw clean package
 
 
@@ -98,20 +142,52 @@ Admin can also manually trigger generation.
 
 
 ## Deploy
-As a Java application and inject environment variables on the server/cloud provider.
+The application can be deployed as a standard Java application and inject environment variables on the server/cloud provider.
 
-MONGO_URI
+Required environment variables:
 
-JWT_SECRET
+- MONGO_URI
 
-SERVER_PORT
+- MONGO_DB
 
-APP_TIMEZONE
+- JWT_SECRET
 
-JWT_EXPIRATION_MS
+- JWT_EXPIRATION_MS
 
-## Roles
+- SERVER_PORT
 
-ROLE_USER: view schedule, book/cancel reservations, profile.
+- APP_TIMEZONE
 
-ROLE_ADMIN: CRUD WOD schedule data, view reservations, manage users.
+
+## Testing
+
+The application has been tested during development using manual and functional testing techniques.
+
+### Backend Testing
+
+- All REST API endpoints were tested using Swagger / OpenAPI UI
+
+- Authentication and authorization flows were verified using JWT-based security
+
+- HTTP status codes (200, 401, 403, 404) were validated for both authorized and unauthorized requests
+
+- Business logic scenarios such as booking creation, cancellation and schedule generation were tested
+
+### Frontend Testing
+
+- User interactions were tested through the Angular UI
+
+- Authentication flow (login, logout, token handling) was verified
+
+- Route protection and role-based access control were validated
+
+- Integration between frontend and backend APIs was tested end-to-end
+
+### Overall Validation
+
+- Successful communication between frontend and backend was verified
+
+- Application behavior was validated for both ROLE_USER and ROLE_ADMIN
+
+- All REST endpoints are documented and manually tested through Swagger, ensuring correct request/response behavior and HTTP status codes.
+
