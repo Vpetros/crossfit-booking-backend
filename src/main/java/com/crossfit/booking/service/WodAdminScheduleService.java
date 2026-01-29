@@ -11,7 +11,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+//@Service comment out for future purpose
 @RequiredArgsConstructor
 public class WodAdminScheduleService {
 
