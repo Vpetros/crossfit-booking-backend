@@ -158,3 +158,32 @@ Required environment variables:
 
 - APP_TIMEZONE
 
+
+### Testing
+
+The application has been functionally tested end-to-end (manual testing) during development.
+
+Testing was performed using:
+
+- Swagger / OpenAPI UI for validating REST API endpoints
+
+- Frontend UI flows for verifying user and admin functionality
+
+Covered Scenarios:
+
+- Application startup and configuration (MongoDB connection, server boot)
+
+- User registration and authentication (JWT-based)
+
+- Authorization rules (401 / 403 responses for protected endpoints)
+
+- Access to protected endpoints using valid JWT tokens
+
+- Booking and cancellation flows
+
+- Admin operations (schedule generation, WOD management)
+
+- End-to-end interaction between frontend and backend
+
+All REST endpoints are documented and manually tested through Swagger, ensuring correct request/response behavior and HTTP status codes.
+
