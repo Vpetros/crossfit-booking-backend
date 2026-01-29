@@ -161,29 +161,33 @@ Required environment variables:
 
 ## Testing
 
-The application has been functionally tested end-to-end (manual testing) during development.
+The application has been tested during development using manual and functional testing techniques.
 
-Testing was performed using:
+### Backend Testing
 
-- Swagger / OpenAPI UI for validating REST API endpoints
+- All REST API endpoints were tested using Swagger / OpenAPI UI
 
-- Frontend UI flows for verifying user and admin functionality
+- Authentication and authorization flows were verified using JWT-based security
 
-Covered Scenarios:
+- HTTP status codes (200, 401, 403, 404) were validated for both authorized and unauthorized requests
 
-- Application startup and configuration (MongoDB connection, server boot)
+- Business logic scenarios such as booking creation, cancellation and schedule generation were tested
 
-- User registration and authentication (JWT-based)
+### Frontend Testing
 
-- Authorization rules (401 / 403 responses for protected endpoints)
+- User interactions were tested through the Angular UI
 
-- Access to protected endpoints using valid JWT tokens
+- Authentication flow (login, logout, token handling) was verified
 
-- Booking and cancellation flows
+- Route protection and role-based access control were validated
 
-- Admin operations (schedule generation, WOD management)
+- Integration between frontend and backend APIs was tested end-to-end
 
-- End-to-end interaction between frontend and backend
+### Overall Validation
+
+Successful communication between frontend and backend was verified
+
+Application behavior was validated for both ROLE_USER and ROLE_ADMIN
 
 All REST endpoints are documented and manually tested through Swagger, ensuring correct request/response behavior and HTTP status codes.
 
