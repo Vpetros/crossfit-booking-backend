@@ -6,7 +6,7 @@ CrossFit gym booking application where users can register/login, view weekly WOD
 
 ## General Requirements
 - Java 17
-- Spring Boot 3.x
+- Spring Boot 3.4.12
 - Spring Security (JWT Authentication & Authorization)
 - MongoDB (MongoDB Atlas supported)
 - Swagger / OpenAPI
